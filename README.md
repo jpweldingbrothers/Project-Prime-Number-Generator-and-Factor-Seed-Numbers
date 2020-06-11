@@ -1,26 +1,12 @@
-# Prime-Number-Generator
-# My 1st Program in Python3 (Generates Prime Numbers)
-
-# Still working on:
-# -Loping the Input to check for several prime factors
-# -writing the prime number list to a file
-# -reading the file back into the program
-# -testing the limits of data manipulation
-# -optimizing execution time
-
-# It's been 20+ years since I programmed in Fortran 77, feels like starting over
-
-# If you are just browing by - check it out and let me know how I did!
-
+# Calculate Primes by removing Non-Primes from list and find the Factors of a requested number
 # upper limit 10,000,000
 
-# Create List of Numbers to Check
+# Create List of Numbers to Check (Seed List)
 seedlist = []
 x = 3
 for i in range(1000):
 	seedlist.append(x)
 	x += 2
-#print(seedlist)
 
 # Define Variables
 listlength = len(seedlist)
@@ -57,6 +43,7 @@ while (loopcounter <= totaliterations):
 		if bool(remainder) == False:
 			evenlistpointer = i + numeratorstartingpoint + evenlistincrementor
 			removallist.append(seedlist[evenlistpointer])
+#			print(seedlist[evenlistpointer])
 
 # Iterate Denominator
 		if numeratorposition >= listlength:
@@ -67,10 +54,8 @@ while (loopcounter <= totaliterations):
 			denominatorposition += 1
 			break
 
-# Print NON-Primes List, Remove Duplicates
+# Non-Primes List, remove all values of Non-Primes List from Seed List
 removallist = list(dict.fromkeys(removallist))
-
-# Remove all Values of NON-Primes List from Seed List
 seedset = set(seedlist)
 removalset = set(removallist)
 primeset = seedset - removalset
@@ -86,15 +71,25 @@ print ("primelist", primelist)
 # Define Variables
 itcount = len(primelist)
 checker = 0
-seed = 0
+seed = 2
+subseed = 0
 
 # Request a Number to be Checked
+print ("")
 print ("# of primes in list             :::", len(primelist))
 print ("largest prime number in list is :::", primelist[-1])
 print ("largest allowable seed # is     :::", primelist[-1] * 2)
-seed = int(input("Input Seed #                    ::: "))
+while seed > 1:
+	print("")
+	seed = int(input("Input Seed #                    ::: "))
+	if (seed <= 1):
+		break
 
 # Check for Prime Factors
-for x in range (itcount):
-	if (seed % primelist[x] == 0):
-		print ("Prime Factor                    :::",primelist[x])
+	for x in range (itcount):
+		if (seed % primelist[x] == 0):
+# ***Figure out a way to factorize the result of seed/primelist[x] to it's lowest level
+			print ("Prime Factor                    :::",primelist[x])
+			subseed = (seed / primelist[x])
+			if (subseed % primelist[x] == 0):
+				print (subseed)
